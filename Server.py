@@ -1,5 +1,3 @@
-
-
 from Code.interaction import *
 from Code.errors import *
 from Code.routes import *
@@ -10,29 +8,29 @@ from io import BytesIO
 
 
 
-app = Flask(__name__)
-app.config["DEBUG"] = True
+serverapp = Flask(__name__)
+serverapp.config["DEBUG"] = True
 
 
 
-@app.route('/storage_health', methods=['GET'])
+@serverapp.route('/storage_health', methods=['GET'])
 def server_healthcheck():
     return function_exception_wrapper(healthcheck, None)
 
 
-@app.route('/create_folder', methods=['GET','POST'])
+@serverapp.route('/create_folder', methods=['GET','POST'])
 def server_create_folder():
     return function_exception_wrapper(create_folder, request)
 
 
 
-@app.route('/upload_file', methods=['POST'])
+@serverapp.route('/upload_file', methods=['POST'])
 def server_upload_file():
     return function_exception_wrapper(upload_file, request)
 
 
 
-@app.route('/download_file', methods=['GET','POST'])
+@serverapp.route('/download_file', methods=['GET','POST'])
 def server_download_file():
     result, status_code = function_exception_wrapper(download_file, request)
     if status_code != 200:
@@ -45,12 +43,12 @@ def server_download_file():
 
 
 
-@app.route('/delete', methods=['GET','POST'])
+@serverapp.route('/delete', methods=['GET','POST'])
 def server_delete():
     return function_exception_wrapper(delete, request)
 
 
-@app.route('/list_contents', methods=['GET','POST'])
+@serverapp.route('/list_contents', methods=['GET','POST'])
 def server_list_contents():
     result, status_code = function_exception_wrapper(list_contents, request)
     if status_code != 200:
@@ -61,7 +59,7 @@ def server_list_contents():
 
 
 
-app.run(host='0.0.0.0', debug=True)
+# serverapp.run(host='0.0.0.0', debug=True)
 
 
 
