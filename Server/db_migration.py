@@ -7,10 +7,12 @@ from Code.db_classes import *
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-
+# Create database
+print("Creating database...")
 create_db(dburl)
 
 # Add root folder
+print("Adding root folder...")
 engine = create_engine(dburl)
 Session = sessionmaker(bind = engine)
 session = Session()

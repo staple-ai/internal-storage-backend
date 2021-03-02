@@ -16,6 +16,30 @@ run: ## run
 	storage
 
 
+rundev: ## run with mount
+	docker rm /storage; \
+	docker run -it --rm \
+	--env-file ${CURDIR}/env/staging_env/config.env \
+	--env-file ${CURDIR}/env/staging_env/urls.env \
+	--env-file ${CURDIR}/env/staging_env/secrets.env \
+	--mount "type=bind,source=${CURDIR}/Server,target=/app" \
+	-p 5000:5000 \
+	-p 80:80 \
+	--name storage \
+	storage /bin/bash 
+
+migrate_db: ## create database
+	docker rm /storage; \
+	docker run -it --rm \
+	--env-file ${CURDIR}/env/staging_env/config.env \
+	--env-file ${CURDIR}/env/staging_env/urls.env \
+	--env-file ${CURDIR}/env/staging_env/secrets.env \
+	-p 5000:5000 \
+	-p 80:80 \
+	--name storage \
+	storage python3 db_migration.py
+
+
 # General commands
 
 clean: ##
