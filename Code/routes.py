@@ -31,16 +31,20 @@ def healthcheck(req):
 
 def create_folder(req):
     path = req.form['path']
-    uid = add_element(path)
+    force = True if req.form.get('force', 'False').lower() == 'true' else False
+    uid = add_element(path, force = force)
     return 'Folder created successfully!', 200
 
 def upload_file(req):
     uploaded_file = req.files['file']
     path = req.form['path']
+    force = True if req.form.get('force', 'False').lower() == 'true' else False
+
+
     if uploaded_file.filename != '':
         print('Uploading File')
         contents = uploaded_file.read()
-        add_element(path, contents)
+        add_element(path, contents, force)
         return 'File uploaded successfully!', 200
     else:
     	raise NoFileSent()

@@ -36,7 +36,7 @@ mime = magic.Magic(mime=True)
 
 
 # This function can be used for adding both documents and folders
-def add_element(path, binary = None):
+def add_element(path, binary = None, force = False):
     
     # Extract filename data
     path = path.strip('/')
@@ -50,12 +50,20 @@ def add_element(path, binary = None):
     # Raise any structural issues
     if get_by_path(path, session) is not None:
         session.close()
-        print("Error: Element with this name already exists")
-        raise ElementAlreadyExists()
+        if force:
+            print("Deleting existing element for recreate")
+            delete_file(path)
+        else:
+            print("Error: Element with this name already exists")
+            raise ElementAlreadyExists()
     if get_by_path(folder, session) is None:
         session.close()
         print("Error: No such folder", folder)
-        raise NoSuchFolder()
+        if force:
+            print("Force Add, Adding:", folder)
+            add_element(folder, None, True)
+        else:
+            raise NoSuchFolder()
     
     # Create filepath Structure element
     path = Structure(folder=folder, name=name, kind = kind)
