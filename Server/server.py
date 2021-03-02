@@ -54,6 +54,11 @@ def server_delete():
     return function_exception_wrapper(delete, request)
 
 
+@serverapp.route('/delete_object', methods=['GET','POST'])
+def server_delete_anything():
+    return function_exception_wrapper(delete_anything, request)
+
+
 @serverapp.route('/list_contents', methods=['GET','POST'])
 def server_list_contents():
     result, status_code = function_exception_wrapper(list_contents, request)

@@ -84,6 +84,13 @@ def delete(req):
         return "Please provide a valid type -  'folder' or 'file'", 400
     return "Deleted {0} '{1}' successfully".format(kind,path) , 200
 
+
+def delete_anything(req):
+    path = req.form['path']
+    generic_delete(path)
+    return "Deleted '{0}' successfully".format(path) , 200
+
+
 def list_contents(req):
     path = req.form['path']
     contents = get_folder_contents(path)

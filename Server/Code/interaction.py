@@ -272,6 +272,15 @@ def delete_file(path):
     return True
 
 
-
-
+def generic_delete(path):
+    session = Session()
+    struct = get_by_path(path, session)
+    session.close()
+    if struct is None:
+        raise NoSuchFolder()
+    if struct[2] == 'file':
+        delete_file(path)
+    else:
+        delete_folder(path)
+    return True
 
