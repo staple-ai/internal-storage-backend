@@ -243,9 +243,7 @@ def delete_folder(path):
         raise NoSuchFolder()
     session.commit()
     session.close()
-    print("Deleted. Flushing.")
-    flush_thread = threading.Thread(target=flush_blobs, name="flusher")
-    flush_thread.start()
+    print("Deleted.")
     return True
 
 
@@ -269,8 +267,8 @@ def delete_file(path):
     
     session.delete(struct)
     session.commit()
-    flush_thread = threading.Thread(target=flush_blobs, name="flusher")
-    flush_thread.start()
+    session.close()
+    print("Deleted.")
     return True
 
 

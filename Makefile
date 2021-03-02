@@ -34,8 +34,6 @@ migrate_db: ## create database
 	--env-file ${CURDIR}/env/staging_env/config.env \
 	--env-file ${CURDIR}/env/staging_env/urls.env \
 	--env-file ${CURDIR}/env/staging_env/secrets.env \
-	-p 5000:5000 \
-	-p 80:80 \
 	--name storage \
 	storage python3 db_migration.py
 
