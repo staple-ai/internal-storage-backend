@@ -9,7 +9,7 @@ from Code.errors import *
 from Code.db_classes import *
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import MetaData, create_engine, distinct, or_
-import magic, os, hashlib, bz2, threading
+import magic, os, hashlib, bz2, threading, io
 
 
 
@@ -31,13 +31,6 @@ Session = sessionmaker(bind = engine)
 mime = magic.Magic(mime=True)
 
 
-# In[84]:
-
-
-img = 'tests/0000.jpg'
-
-
-# In[85]:
 
 
 
@@ -70,7 +63,7 @@ def add_element(path, binary = None):
     # If adding a file blob
     if binary is not None:
         # Get file type
-        filetype = mime.from_file(img) 
+        filetype = mime.from_buffer(binary) 
 
         # Get binary hash
         bhash = hashlib.sha256(binary).hexdigest()
@@ -205,9 +198,12 @@ def get_file(filepath):
     session.close()
     if blob is None:
         raise NoSuchFile({ "message": "Blob Not Found", "item" : filepath})
+
+    print(type(blob.blob))
         
     print("Decompressing...")
     file = bz2.decompress(blob.blob)
+    print("Decompressed.")
     return {'file': file, 'mimetype': idx[2], 'name': os.path.split(filepath)[1]}
 
 
