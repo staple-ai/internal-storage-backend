@@ -47,7 +47,24 @@ def upload_file(req):
         add_element(path, contents, force)
         return 'File uploaded successfully!', 200
     else:
-    	raise NoFileSent()
+        raise NoFileSent()
+
+
+
+def create_element(req):
+    path = req.form['path']
+    force = True if req.form.get('force', 'False').lower() == 'true' else False
+
+    uploaded_file = req.files.get('file', None)
+    file_upload = uploaded_file is not None and uploaded_file.filename != ''
+    contents = uploaded_file.read() if file_upload else None
+
+    print('Uploading File')
+    add_element(path, contents, force)
+    if file_upload:
+        return 'File uploaded successfully!', 200
+    else:
+        return 'Folder created successfully!', 200
 
 
 def download_file(req):

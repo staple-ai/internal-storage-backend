@@ -30,6 +30,11 @@ def server_upload_file():
     return function_exception_wrapper(upload_file, request)
 
 
+@serverapp.route('/create_element', methods=['POST'])
+def server_create_element():
+    return function_exception_wrapper(create_element, request)
+
+
 
 @serverapp.route('/download_file', methods=['GET','POST'])
 def server_download_file():
