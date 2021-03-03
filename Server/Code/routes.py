@@ -6,6 +6,25 @@ from werkzeug.exceptions import BadRequest, HTTPException
 import traceback, sys
 
 
+def exhaust_wrapper(func, req):
+    message, code = function_exception_wrapper(func, req)
+    print("Flushing stream...")
+    a = request.stream
+    print(type(a))
+    print(a)
+    try:
+        a.truncate(0)
+        print("Could truncate")
+    except:
+        print("Could not truncate")
+    try:
+        a.exhaust()
+        print("Could exhaust")
+    except:
+        print("Could not exhaust")
+    # environ['wsgi.input'].read()
+    return message, code
+
 
 def function_exception_wrapper(func, req):
     try:

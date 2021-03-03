@@ -15,30 +15,29 @@ serverapp.config["DEBUG"] = True
 
 @serverapp.route('/storage_health', methods=['GET'])
 def server_healthcheck():
-    print("hello world")
-    return function_exception_wrapper(healthcheck, None)
+    return exhaust_wrapper(healthcheck, None)
 
 
 @serverapp.route('/create_folder', methods=['GET','POST'])
 def server_create_folder():
-    return function_exception_wrapper(create_folder, request)
+    return exhaust_wrapper(create_folder, request)
 
 
 
 @serverapp.route('/upload_file', methods=['POST'])
 def server_upload_file():
-    return function_exception_wrapper(upload_file, request)
+    return exhaust_wrapper(upload_file, request)
 
 
 @serverapp.route('/create_element', methods=['POST'])
 def server_create_element():
-    return function_exception_wrapper(create_element, request)
+    return exhaust_wrapper(create_element, request)
 
 
 
 @serverapp.route('/download_file', methods=['GET','POST'])
 def server_download_file():
-    result, status_code = function_exception_wrapper(download_file, request)
+    result, status_code = exhaust_wrapper(download_file, request)
     if status_code != 200:
         return result, status_code
     else:
@@ -51,17 +50,17 @@ def server_download_file():
 
 @serverapp.route('/delete', methods=['GET','POST'])
 def server_delete():
-    return function_exception_wrapper(delete, request)
+    return exhaust_wrapper(delete, request)
 
 
 @serverapp.route('/delete_object', methods=['GET','POST'])
 def server_delete_anything():
-    return function_exception_wrapper(delete_anything, request)
+    return exhaust_wrapper(delete_anything, request)
 
 
 @serverapp.route('/list_contents', methods=['GET','POST'])
 def server_list_contents():
-    result, status_code = function_exception_wrapper(list_contents, request)
+    result, status_code = exhaust_wrapper(list_contents, request)
     if status_code != 200:
         return result, status_code
     else:
