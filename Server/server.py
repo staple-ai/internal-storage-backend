@@ -48,12 +48,12 @@ def server_download_file():
 
 
 
-@serverapp.route('/delete', methods=['GET','POST'])
+@serverapp.route('/delete', methods=['GET','POST', 'DELETE'])
 def server_delete():
     return exhaust_wrapper(delete, request)
 
 
-@serverapp.route('/delete_object', methods=['GET','POST'])
+@serverapp.route('/delete_object', methods=['GET','POST', 'DELETE'])
 def server_delete_anything():
     return exhaust_wrapper(delete_anything, request)
 

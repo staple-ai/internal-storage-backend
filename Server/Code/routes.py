@@ -49,8 +49,13 @@ def healthcheck(req):
 
 
 def create_folder(req):
-    path = req.form['path']
-    force = True if req.form.get('force', 'False').lower() == 'true' else False
+    if request.method == 'POST':
+        path = req.form['path']
+        force = True if req.form.get('force', 'False').lower() == 'true' else False
+    elif request.method == 'GET':
+        path = request.args.get('path')
+        force = True if req.args.get('force', 'False').lower() == 'true' else False
+    
     uid = add_element(path, force = force)
     return 'Folder created successfully!', 200
 
@@ -93,8 +98,12 @@ def download_file(req):
 
 
 def delete(req):
-    kind = req.form['type']
-    path = req.form['path']
+    if request.method == 'POST':
+        kind = req.form['type']
+        path = req.form['path']
+    elif request.method == 'GET' or request.method == 'DELETE':
+        kind = request.args.get('type')
+        path = request.args.get('path')
     if kind.lower() == 'file':
         uid = delete_file(path)
     elif kind.lower() == 'folder':
@@ -105,13 +114,19 @@ def delete(req):
 
 
 def delete_anything(req):
-    path = req.form['path']
+    if request.method == 'POST':
+        path = req.form['path']
+    elif request.method == 'GET' or request.method == 'DELETE':
+        path = request.args.get('path')
     generic_delete(path)
     return "Deleted '{0}' successfully".format(path) , 200
 
 
 def list_contents(req):
-    path = req.form['path']
+    if request.method == 'POST':
+        path = req.form['path']
+    elif request.method == 'GET':
+        path = request.args.get('path')
     contents = get_folder_contents(path)
     return contents, 200
 
