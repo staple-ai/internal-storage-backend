@@ -238,7 +238,6 @@ def delete_folder(path):
               .delete(synchronize_session=False)
              )
     if del_folder == 0:
-        session.rollback()
         session.close()
         raise NoSuchFolder()
     session.commit()

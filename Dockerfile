@@ -11,8 +11,10 @@ RUN apt-get update && apt-get install -y python3-pip libpq-dev\
 	&& ln -fs /usr/share/zoneinfo/Asia/Singapore /etc/localtime && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
+RUN echo "net.core.somaxconn = 2048" >> /etc/sysctl.conf
 ADD requirements.txt requirements.txt
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
+
 
 WORKDIR /app
 ADD ./Server /app

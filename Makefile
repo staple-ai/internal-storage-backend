@@ -10,6 +10,7 @@ run: ## run
 	--env-file ${CURDIR}/env/staging_env/config.env \
 	--env-file ${CURDIR}/env/staging_env/urls.env \
 	--env-file ${CURDIR}/env/staging_env/secrets.env \
+	--sysctl net.core.somaxconn=1024 \
 	-p 5000:80 \
 	-p 80:80 \
 	--name storage \
