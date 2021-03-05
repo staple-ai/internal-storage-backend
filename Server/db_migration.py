@@ -17,6 +17,8 @@ engine = create_engine(dburl)
 Session = sessionmaker(bind = engine)
 session = Session()
 session.add(Structure(folder='', name='', kind = 'folder'))
+session.commit()
 session.close()
+print("Added.")
 
 

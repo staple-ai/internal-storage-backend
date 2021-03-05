@@ -46,6 +46,7 @@ def function_exception_wrapper(func, req):
         response, status_code = func(req)
         return response, status_code
     except (NoSuchFolder, NoSuchFile, ElementAlreadyExists, DatabaseError, UnknownServerError, NoFileSent) as er:
+        print(er.message, er.code)
         return er.message, er.code
     except HTTPException as e:
         print("werkzeug")
@@ -58,6 +59,7 @@ def function_exception_wrapper(func, req):
 
 def healthcheck(req):
     exhaust_request(req)
+    console.log('healthcecking')
     db_online = healtcheck_root_exists()
     status_code = 200 if db_online else 500
     message = "Document Storage Server is working" if db_online else "Root folder not accessible"

@@ -6,6 +6,13 @@ from io import BytesIO
 
 
 
+# Add root folder
+print("Adding root folder...")
+engine = create_engine(dburl)
+Session = sessionmaker(bind = engine)
+session = Session()
+session.add(Structure(folder='', name='', kind = 'folder'))
+session.close()
 
 
 serverapp = Flask(__name__)
