@@ -13,15 +13,13 @@ storage_host_quoted = urllib.parse.quote_plus(storage_host)
 storage_pass_quoted = urllib.parse.quote_plus(storage_pass)
 storage_user_quoted = urllib.parse.quote_plus(storage_user)
 
-dburl = "postgresql://{user}:{pwd}@{host}/{name}".format(name= storage_name_quoted, 
-                                                          host= storage_host_quoted, 
-                                                          pwd= storage_pass_quoted, 
-                                                          user= storage_user_quoted)
+dburl = "postgresql://{user}:{pwd}@{host}/{name}".format(name= storage_name_quoted, host= storage_host_quoted,pwd= storage_pass_quoted,user= storage_user_quoted)
 
 def create_db(dburl):
-    engine = create_engine(dburl, echo = True)
+	print(dburl)
+	engine = create_engine(dburl, echo = True)
 
-    if not database_exists(engine.url):
-        create_database(engine.url)
+	if not database_exists(engine.url):
+		create_database(engine.url)
 
-    Base.metadata.create_all(engine)
+	Base.metadata.create_all(engine)

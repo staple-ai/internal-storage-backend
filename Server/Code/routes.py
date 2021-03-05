@@ -3,7 +3,7 @@ from Code.interaction import *
 from Code.errors import *
 from flask import Flask, request, send_file
 from werkzeug.exceptions import BadRequest, HTTPException
-import traceback, sys
+import traceback, sys, psycopg2
 
 
 def exhaust_wrapper(func, req):
@@ -143,7 +143,11 @@ def delete_anything(req):
     elif request.method == 'GET' or request.method == 'DELETE':
         path = request.args.get('path')
     exhaust_request(req)
-    generic_delete(path)
+    try:
+        generic_delete(path)
+    except psycopg2.OperationalError as e:
+        print("OperationalError")
+
     return "Deleted '{0}' successfully".format(path) , 200
 
 
