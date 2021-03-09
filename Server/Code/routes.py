@@ -58,8 +58,9 @@ def function_exception_wrapper(func, req):
         return "Internal Server Error", 500
 
 def healthcheck(req):
+    path = None
     exhaust_request(req)
-    console.log('healthcecking')
+    print('health checking')
     db_online = healtcheck_root_exists()
     status_code = 200 if db_online else 500
     message = "Document Storage Server is working" if db_online else "Root folder not accessible"
@@ -67,12 +68,14 @@ def healthcheck(req):
 
 
 def create_folder(req):
-    if request.method == 'POST':
-        path = req.form['path']
-        force = True if req.form.get('force', 'False').lower() == 'true' else False
-    elif request.method == 'GET':
+
+    path = None
+    if request.method == 'GET':
         path = request.args.get('path')
         force = True if req.args.get('force', 'False').lower() == 'true' else False
+    if path is None:
+        path = req.form['path']
+        force = True if req.form.get('force', 'False').lower() == 'true' else False
     exhaust_request(req)
     uid = add_element(path, force = force)
     return 'Folder created successfully!', 200
@@ -113,22 +116,24 @@ def create_element(req):
 
 
 def download_file(req):
-    if request.method == 'POST':
-        path = req.form['path']
-    elif request.method == 'GET' or request.method == 'DELETE':
+    path = None
+    if request.method == 'GET':
         path = request.args.get('path')
+    if path is None:
+        path = req.form['path']
     exhaust_request(req)
     file = get_file(path)
     return file, 200
 
 
 def delete(req):
-    if request.method == 'POST':
-        kind = req.form['type']
-        path = req.form['path']
-    elif request.method == 'GET' or request.method == 'DELETE':
-        kind = request.args.get('type')
+    path = None
+    if request.method == 'GET':
         path = request.args.get('path')
+        kind = request.args.get('type')
+    if path is None:
+        path = req.form['path']
+        kind = req.form['type']
     exhaust_request(req)
     if kind.lower() == 'file':
         uid = delete_file(path)
@@ -140,10 +145,11 @@ def delete(req):
 
 
 def delete_anything(req):
-    if request.method == 'POST':
-        path = req.form['path']
-    elif request.method == 'GET' or request.method == 'DELETE':
+    path = None
+    if request.method == 'GET':
         path = request.args.get('path')
+    if path is None:
+        path = req.form['path']
     exhaust_request(req)
     try:
         generic_delete(path)
@@ -154,10 +160,11 @@ def delete_anything(req):
 
 
 def list_contents(req):
-    if request.method == 'POST':
-        path = req.form['path']
-    elif request.method == 'GET':
+    path = None
+    if request.method == 'GET':
         path = request.args.get('path')
+    if path is None:
+        path = req.form['path']
     exhaust_request(req)
     contents = get_folder_contents(path)
     return contents, 200
