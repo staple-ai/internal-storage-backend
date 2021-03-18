@@ -70,9 +70,8 @@ def healthcheck(req):
 def create_folder(req):
 
     path = None
-    if request.method == 'GET':
-        path = request.args.get('path')
-        force = True if req.args.get('force', 'False').lower() == 'true' else False
+    path = request.args.get('path')
+    force = True if req.args.get('force', 'False').lower() == 'true' else False
     if path is None:
         path = req.form['path']
         force = True if req.form.get('force', 'False').lower() == 'true' else False
@@ -117,8 +116,7 @@ def create_element(req):
 
 def download_file(req):
     path = None
-    if request.method == 'GET':
-        path = request.args.get('path')
+    path = request.args.get('path')
     if path is None:
         path = req.form['path']
     exhaust_request(req)
@@ -128,9 +126,8 @@ def download_file(req):
 
 def delete(req):
     path = None
-    if request.method == 'GET':
-        path = request.args.get('path')
-        kind = request.args.get('type')
+    path = request.args.get('path')
+    kind = request.args.get('type')
     if path is None:
         path = req.form['path']
         kind = req.form['type']
@@ -146,8 +143,7 @@ def delete(req):
 
 def delete_anything(req):
     path = None
-    if request.method == 'GET':
-        path = request.args.get('path')
+    path = request.args.get('path')
     if path is None:
         path = req.form['path']
     exhaust_request(req)
