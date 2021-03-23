@@ -1,8 +1,6 @@
 FROM ubuntu:18.04
 
 LABEL maintainer="hebehh@gmail.com"
-USER root
-
 
 RUN apt-get update && apt-get install -y python3-pip libpq-dev\
 	&& apt-get install -y systemd language-pack-en libjpeg-dev libpng-dev build-essential locales\
