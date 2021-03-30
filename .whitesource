@@ -1,6 +1,6 @@
 {
   "scanSettings": {
-    "baseBranches": []
+    "configMode": "LOCAL"
   },
   "checkRunSettings": {
     "vulnerableCheckRunConclusionLevel": "failure",
