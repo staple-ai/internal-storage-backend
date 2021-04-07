@@ -7,12 +7,12 @@ build: ## build
 run: ## run
 	docker rm /storage; \
 	docker run -it --rm \
+	--user=2500:2000 \
 	--env-file ${CURDIR}/env/staging_env/config.env \
 	--env-file ${CURDIR}/env/staging_env/urls.env \
 	--env-file ${CURDIR}/env/staging_env/secrets.env \
 	--sysctl net.core.somaxconn=1024 \
-	-p 5000:80 \
-	-p 80:80 \
+	-p 5000:5000 \
 	--name storage \
 	storage
 
@@ -20,6 +20,7 @@ run: ## run
 rundev: ## run with mount
 	docker rm /storage; \
 	docker run -it --rm \
+	--user=2500:2000 \
 	--env-file ${CURDIR}/env/staging_env/config.env \
 	--env-file ${CURDIR}/env/staging_env/urls.env \
 	--env-file ${CURDIR}/env/staging_env/secrets.env \
@@ -32,6 +33,7 @@ rundev: ## run with mount
 migrate_db: ## create database
 	docker rm /storage; \
 	docker run -it --rm \
+	--user=2500:2000 \
 	--env-file ${CURDIR}/env/staging_env/config.env \
 	--env-file ${CURDIR}/env/staging_env/urls.env \
 	--env-file ${CURDIR}/env/staging_env/secrets.env \
